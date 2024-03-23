@@ -53,7 +53,7 @@ const Header = () => {
 			<div
 				className={`flex  justify-between   bg-gradient-to-b from-[#141414] transition-all ease-in-out duration-1000 text-white ${
 					userName ? "fixed" : "relative"
-				} w-[100%] top-0 z-30  p-1   ${
+				} w-[100%] top-0 z-30  p-1 py-2  ${
 					scrolling && userName ? "bg-[#141414] " : " "
 				}  `}
 			>

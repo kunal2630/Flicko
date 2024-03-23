@@ -13,7 +13,7 @@ const Landingpage = () => {
 	const activeUser = useSelector((state) => state.user.currentUser);
 	useEffect(()=>{
 		if (activeUser) {
-			console.log("jii");
+			
 			navigate("/browse");
 		}
 	})
