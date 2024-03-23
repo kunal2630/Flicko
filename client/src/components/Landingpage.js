@@ -45,7 +45,7 @@ const Landingpage = () => {
 		}
 
 		if (loading) {
-			setSubmitButtonContent("Loading...");
+			setSubmitButtonContent("Loading! Please Wait...");
 		}
 	}, [signIn, loading]);
 
@@ -74,9 +74,10 @@ const Landingpage = () => {
 	};
 
 	const handleSubmit = async (e) => {
+		setLoading(true);
 		try {
 			e.preventDefault();
-			setLoading(false);
+			
 			setEmailErrorMsg(null);
 			setAuthMessage(null);
 			const emailError = ValidateFormEmail(email.current.value);
@@ -88,7 +89,7 @@ const Landingpage = () => {
 
 			if (signIn) {
 				//signin
-				setLoading(true);
+			
 				const formData = {
 					email: email.current.value,
 					password: password.current.value,
@@ -110,8 +111,12 @@ const Landingpage = () => {
 				} else {
 					setAuthMessage("Incorrect Email or Password");
 				}
+			setLoading(false);
+
 			} else {
 				//signup
+			setLoading(true);
+
 				const formData = {
 					name: name.current.value,
 					email: email.current.value,
@@ -126,6 +131,7 @@ const Landingpage = () => {
 						},
 						body: JSON.stringify(formData),
 					}
+
 				);
 				const jsonResponse = await response.json();
 				if (jsonResponse.Success) {
@@ -144,14 +150,17 @@ const Landingpage = () => {
 				} else {
 					setEmailErrorMsg("Email Already Exist");
 				}
+
 			}
 			setLoading(false);
 		} catch (error) {
 			navigate("/error");
 		}
+		setLoading(false);
 	};
 
 	const handleGoogleAuth = async () => {
+		setLoading(true);
 		try {
 			const provider = new GoogleAuthProvider();
 			const auth = getAuth(app);
@@ -175,7 +184,10 @@ const Landingpage = () => {
 				dispatch(addUser(jsonResponse.validUser));
 				navigate("/browse");
 			}
-		} catch (error) {}
+		} catch (error) {
+			setLoading(false);
+		}
+		setLoading(false);
 	};
 
 	return (

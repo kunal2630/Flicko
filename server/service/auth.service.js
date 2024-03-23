@@ -8,7 +8,8 @@ class User {
 	createUser = (name, email, password) => {
 
 		const hash = bcrypt.hashSync(password, 10);
-		const checkUser = user.createUser(name, email, hash);
+		const firstName=name.split(" ")[0];
+		const checkUser = user.createUser(firstName, email, hash);
 		return checkUser;
 	};
 	createGoogleUser=async (name,email)=>{
