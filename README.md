@@ -2,7 +2,7 @@
 
 ## Features
 
-- **Secure Authentication:** Integrated Firebase-based user authentication for a robust and secure login system, prioritizing user data protection.
+- **Secure Authentication:** Secure Authentication: Utilized MongoDB for user data storage, Firebase Auth for Google sign-in, and JWT tokens for robust security.
 
 - **TMDB API Integration:** Displayed an extensive list of movies using TMDB API, providing users with a diverse range of entertainment options.
 
