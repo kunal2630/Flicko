@@ -94,7 +94,7 @@ const Landingpage = () => {
 					password: password.current.value,
 				};
 				const response = await fetch(
-					"http://localhost:8080/api/v1/auth/login",
+					"https://flicko.onrender.com/api/v1/auth/login",
 					{
 						method: "POST",
 						headers: {
@@ -118,7 +118,7 @@ const Landingpage = () => {
 					password: password.current.value,
 				};
 				const response = await fetch(
-					"http://localhost:8080/api/v1/auth/signup",
+					"https://flicko.onrender.com/api/v1/auth/signup",
 					{
 						method: "POST",
 						headers: {
@@ -161,7 +161,7 @@ const Landingpage = () => {
 				email: result?.user?.email,
 			};
 			const response = await fetch(
-				"http://localhost:8080/api/v1/auth/gauth",
+				"https://flicko.onrender.com/api/v1/auth/gauth",
 				{
 					method: "POST",
 					headers: {
