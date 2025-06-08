@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Moviecard from "./Moviecard";
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 

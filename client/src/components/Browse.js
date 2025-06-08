@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 import Header from "./Header";
 import HomepageMainComponent from "./HomepageMainComponent";
 import useFetchTrendingMovie from "../hooks/useFetchTrendingMovie";
@@ -22,7 +22,7 @@ const Browse = () => {
       <Header />
 
       {searchValue && !movieId && <GptSearch />}
-      {movieId &&  <Details id={movieId} />}
+      {movieId && <Details id={movieId} />}
       {!movieId && !searchValue && (
         <>
           <HomepageMainComponent />

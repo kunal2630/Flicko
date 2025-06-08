@@ -1,4 +1,3 @@
-import React from "react";
 import { IMG_URL } from "../utils/constants";
 import { useDispatch } from "react-redux";
 import { addMovieId } from "../utils/movieSlice";

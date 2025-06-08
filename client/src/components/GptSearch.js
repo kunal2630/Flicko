@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import openai from "../utils/openAI";
 import { BG_IMG_URL, options } from "../utils/constants";
@@ -29,8 +29,8 @@ const GptSearch = () => {
   const fetchSearchMovie = async (movie) => {
     const data = await fetch(
       "https://api.themoviedb.org/3/search/movie?query=" +
-        movie +
-        "&include_adult=false&language=en-US&page=1",
+      movie +
+      "&include_adult=false&language=en-US&page=1",
       options
     );
 
@@ -110,9 +110,8 @@ const GptSearch = () => {
               ref={searchValue}
               name=""
               id=""
-              className={`w-[100%]  bg-black outline-none text-lg font-semibold ${
-                emptySearch ? "placeholder-red-600 " : "placeholder-slate-300 hover:placeholder-white"
-              } `}
+              className={`w-[100%]  bg-black outline-none text-lg font-semibold ${emptySearch ? "placeholder-red-600 " : "placeholder-slate-300 hover:placeholder-white"
+                } `}
               placeholder={
                 emptySearch
                   ? "Search Query cant be blank!"

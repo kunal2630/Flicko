@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import useFetchNowPlayingMovieTeaser from "../hooks/useFetchNowPlayingMovieTeaser";
 import useFetchNowPlayingMovieData from "../hooks/useFetchNowPlayingMovieData";
 import { useSelector } from "react-redux";

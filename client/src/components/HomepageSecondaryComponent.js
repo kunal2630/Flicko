@@ -1,4 +1,3 @@
-import React from "react";
 import Moviesection from "./Moviesection";
 import { useSelector } from "react-redux";
 

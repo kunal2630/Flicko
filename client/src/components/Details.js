@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import useFetchMovieDetails from "../hooks/useFetchMovieDetails";
 import { useSelector } from "react-redux";
 import { IMG_URL } from "../utils/constants";

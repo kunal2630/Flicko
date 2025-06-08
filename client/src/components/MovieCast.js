@@ -1,4 +1,3 @@
-import React from "react";
 import { CREW_FACE_IMG_URL } from "../utils/constants";
 
 const MovieCast = ({ profilePath, name, character }) => {
