@@ -6,7 +6,7 @@ const MovieCast = ({ profilePath, name, character }) => {
     profilePath &&
     name &&
     character && (
-      <div className="  rounded-xl  h-72 overscroll-y-none  shadow-2xl  mr-3 hover:scale-105 ease-in-out duration-300">
+      <div className="rounded-xl  h-72 overscroll-y-none  shadow-2xl  mr-3 hover:scale-105 ease-in-out duration-300 mb-8">
         <div className="  w-[139px]  ">
           <img
             className="rounded-tl-lg rounded-tr-lg object-cover"

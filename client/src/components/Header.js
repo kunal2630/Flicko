@@ -51,18 +51,15 @@ const Header = () => {
 	return (
 		<div className="absolute  ">
 			<div
-				className={`flex  justify-between   bg-gradient-to-b from-[#141414] transition-all ease-in-out duration-1000 text-white ${
-					userName ? "fixed" : "relative"
-				} w-[100%] top-0 z-30  p-1 py-2  ${
-					scrolling && userName ? "bg-[#141414] " : " "
-				}  `}
+				className={`flex  justify-between   bg-gradient-to-b from-[#141414] transition-all ease-in-out duration-1000 text-white ${userName ? "fixed" : "relative"
+					} w-[100%] top-0 z-30  p-1 py-2  ${scrolling && userName ? "bg-[#141414] " : " "
+					}  `}
 			>
 				<div
-					className={` ml-3 overflow-hidden ${
-						searchValue
-							? "hover:cursor-auto"
-							: "hover:cursor-pointer"
-					}  `}
+					className={` ml-3 overflow-hidden ${searchValue
+						? "hover:cursor-auto"
+						: "hover:cursor-pointer"
+						}  `}
 					onClick={() => {
 						dispatch(addMovieId(null));
 						dispatch(addMovieDetailsFromId(null));
@@ -99,11 +96,10 @@ const Header = () => {
 								}}
 							>
 								<button
-									className={`flex hover:bg-opacity-70 hover:text-white text-lg outline-none focus:outline-none rounded-lg items-center gap-2 hover:bg-black p-1 px-2 ${
-										searchValue
-											? "text-red-600 bg-black"
-											: ""
-									}`}
+									className={`flex hover:bg-opacity-70 hover:text-white text-lg outline-none focus:outline-none rounded-lg items-center gap-2 hover:bg-black p-1 px-2 ${searchValue
+										? "text-red-600 bg-black"
+										: ""
+										}`}
 								>
 									{searchValue ? (
 										"BROWSE"
@@ -117,8 +113,8 @@ const Header = () => {
 							</div>
 
 							<p className="hidden md:flex text-xl font-bold">
-								{userName?.userName.charAt(0).toUpperCase() +
-									userName?.userName.slice(1)}
+								{userName.userName ? userName?.userName.charAt(0).toUpperCase() +
+									userName?.userName.slice(1) : "Guest"}
 							</p>
 							<IoIosNotifications
 								className="hidden sm:flex text-3xl  hover:cursor-pointer"

@@ -5,15 +5,14 @@ import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../utils/userSlice.js";
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { app } from "../utils/firebase.js";
+// import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+// import { app } from "../utils/firebase.js";
 
 const Landingpage = () => {
 	const navigate = useNavigate();
 	const activeUser = useSelector((state) => state.user.currentUser);
-	useEffect(()=>{
+	useEffect(() => {
 		if (activeUser) {
-			
 			navigate("/browse");
 		}
 	})
@@ -25,9 +24,7 @@ const Landingpage = () => {
 	const [isPasswordFocused, setIsPasswordFocused] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const [submitButtonContent, setSubmitButtonContent] = useState("Sign In");
-
 	const dispatch = useDispatch();
-
 	const name = useRef(null);
 	const email = useRef(null);
 	const password = useRef(null);
@@ -77,7 +74,6 @@ const Landingpage = () => {
 		setLoading(true);
 		try {
 			e.preventDefault();
-			
 			setEmailErrorMsg(null);
 			setAuthMessage(null);
 			const emailError = ValidateFormEmail(email.current.value);
@@ -89,7 +85,7 @@ const Landingpage = () => {
 
 			if (signIn) {
 				//signin
-			
+
 				const formData = {
 					email: email.current.value,
 					password: password.current.value,
@@ -111,11 +107,11 @@ const Landingpage = () => {
 				} else {
 					setAuthMessage("Incorrect Email or Password");
 				}
-			setLoading(false);
+				setLoading(false);
 
 			} else {
 				//signup
-			setLoading(true);
+				setLoading(true);
 
 				const formData = {
 					name: name.current.value,
@@ -150,7 +146,6 @@ const Landingpage = () => {
 				} else {
 					setEmailErrorMsg("Email Already Exist");
 				}
-
 			}
 			setLoading(false);
 		} catch (error) {
@@ -159,31 +154,33 @@ const Landingpage = () => {
 		setLoading(false);
 	};
 
-	const handleGoogleAuth = async () => {
+	const handleGuestLogin = async () => {
 		setLoading(true);
 		try {
-			const provider = new GoogleAuthProvider();
-			const auth = getAuth(app);
-			const result = await signInWithPopup(auth, provider);
-			const userData = {
-				name: result?.user?.displayName,
-				email: result?.user?.email,
-			};
-			const response = await fetch(
-				"https://flicko.onrender.com/api/v1/auth/gauth",
-				{
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify(userData),
-				}
-			);
-			const jsonResponse = await response.json();
-			if (jsonResponse.Success) {
-				dispatch(addUser(jsonResponse.validUser));
-				navigate("/browse");
-			}
+			// const provider = new GoogleAuthProvider();
+			// const auth = getAuth(app);
+			// const result = await signInWithPopup(auth, provider);
+			// const userData = {
+			// 	name: result?.user?.displayName,
+			// 	email: result?.user?.email,
+			// };
+			// const response = await fetch(
+			// 	"https://flicko.onrender.com/api/v1/auth/gauth",
+			// 	{
+			// 		method: "POST",
+			// 		headers: {
+			// 			"Content-Type": "application/json",
+			// 		},
+			// 		body: JSON.stringify(userData),
+			// 	}
+			// );
+			// const jsonResponse = await response.json();
+			// if (jsonResponse.Success) {
+			// 	dispatch(addUser(jsonResponse.validUser));
+			// 	navigate("/browse");
+			// }
+			dispatch(addUser("Guest"));
+			navigate("/browse");
 		} catch (error) {
 			setLoading(false);
 		}
@@ -191,8 +188,6 @@ const Landingpage = () => {
 	};
 
 	return (
-
-
 		<div className="relative">
 			<Header />
 
@@ -264,12 +259,11 @@ const Landingpage = () => {
 						{submitButtonContent}
 					</button>
 					<button
-						onClick={handleGoogleAuth}
+						onClick={handleGuestLogin}
 						type="button"
 						className=" focus:outline-none flex items-center justify-center gap-2 w-[90%] text-xl px-2 py-2.5  mx-3 my-2 bg-opacity-70 hover:bg-opacity-100 font-bold bg-white rounded-lg  "
 					>
-						<FcGoogle size={25} />
-						Continue With Google
+						Guest Login
 					</button>
 
 					<p className="ml-2 m-3 mt-4  text-xl text-gray-400">

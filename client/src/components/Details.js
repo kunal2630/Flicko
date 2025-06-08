@@ -8,6 +8,8 @@ import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 import { IoClose } from "react-icons/io5";
 import useFetchNowPlayingMovieTeaser from "../hooks/useFetchNowPlayingMovieTeaser";
 import { IoMdStar } from "react-icons/io";
+import { motion, AnimatePresence } from "framer-motion";
+import { FaSpinner } from "react-icons/fa";
 
 const Details = ({ id }) => {
   useFetchNowPlayingMovieTeaser(id);
@@ -21,7 +23,19 @@ const Details = ({ id }) => {
   const [playTrailer, setPlayTrailer] = useState(false);
 
   useFetchMovieDetails(id);
+  const [isVideoLoading, setIsVideoLoading] = useState(false);
+  const [isVideoReady, setIsVideoReady] = useState(false);
 
+  const handlePlayTrailer = () => {
+    setPlayTrailer(true);
+    setIsVideoLoading(true);
+  };
+
+
+  const handleCloseTrailer = () => {
+    setPlayTrailer(false);
+    setIsVideoReady(false);
+  };
   const movieIdDetails = useSelector((store) => store.movie.movieDetailsFromId);
 
 
@@ -30,7 +44,7 @@ const Details = ({ id }) => {
   );
   const moviePosterId = movieIdDetails?.poster_path;
   const movieName = movieIdDetails?.title;
-  const movieRating=movieIdDetails?.vote_average?.toFixed(1);
+  const movieRating = movieIdDetails?.vote_average?.toFixed(1);
 
 
   const adultMovie = movieIdDetails?.adult;
@@ -80,14 +94,13 @@ const Details = ({ id }) => {
   return (
     <>
       <div
-        className={`relative  ${
-          playTrailer ? "filter grayscale pointer-events-none" : ""
-        } `}
+        className={`relative  ${playTrailer ? "filter grayscale pointer-events-none" : ""
+          } `}
       >
-        
+
         {!movieIdDetails && <div></div>}
         {movieIdDetails && (
-          <div className="flex -z-10 w-full py-10 px-12 mt-16 bg-slate-200 gap-6 shadow-2xl ">
+          <div className="flex -z-10 w-full py-10 px-12 mt-16 backdrop-blur-md bg-white/5 gap-6 shadow-2xl ">
             {moviePosterId && (
               <div className="hidden lg:flex w-3/12 hover:scale-105 ease-in-out duration-300">
                 <img
@@ -135,20 +148,20 @@ const Details = ({ id }) => {
                   </div>
                 </div>
 
-                {movieRating>0 && <div className="w-[80px] shadow-xl text-lg font-bold px-4 py-2 bg-gradient-to-r from-slate-300  rounded-md">
+                {movieRating > 0 && <div className="w-[80px] shadow-xl text-lg font-bold px-4 py-2 bg-gradient-to-r from-slate-300  rounded-md">
 
 
-                    <div className="flex    text-orange-600">
+                  <div className="flex    text-orange-600">
 
-                      
-                      <div>  <p>{movieRating}  </p></div>
-                      <div><IoMdStar/></div>
-                    </div>
-                  
-                    <div className="flex item-center  ">
+
+                    <div>  <p>{movieRating}  </p></div>
+                    <div><IoMdStar /></div>
+                  </div>
+
+                  <div className="flex item-center  ">
                     <div className="border-b-[0.1px] border-dotted border-[#7e808c]  w-16 "></div></div>
 
-                    <div className="flex  items-center text-2xl text-orange-600 "><p>10</p></div>
+                  <div className="flex  items-center text-2xl text-orange-600 "><p>10</p></div>
 
                 </div>}
               </div>
@@ -161,20 +174,18 @@ const Details = ({ id }) => {
                     </p>
                   </div>
                 )}
-                <div
-                  className="outline-none mt-2 md:mt-0 "
-                  onClick={() => {
-                    setPlayTrailer(!playTrailer);
-                  }}
+                <motion.div
+                  onClick={handlePlayTrailer}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                 >
-                  <button className="flex   outline-none  hover:bg-[#1414] py-1 px-2 text-md font-bold justify-center items-center  rounded-md gap-1">
-                    <div className="flex">
-                      <FaPlay />
-                    </div>
-                    <div>Play Trailer</div>
+                  <button className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-md">
+                    <FaPlay />
+                    Play Trailer
                   </button>
-                </div>
+                </motion.div>
               </div>
+
               {overView && (
                 <div className="mb-10">
                   <p className="text-xl font-bold text-[#000] mb-3">Overview</p>
@@ -246,7 +257,7 @@ const Details = ({ id }) => {
           </div>
         )}
 
-        {castDetails?.cast && castDetails?.cast?.length > 0  && (
+        {castDetails?.cast && castDetails?.cast?.length > 0 && (
           <div className=" px-12 mt-5">
             <div className="mb-6">
               <p className="text-black font-bold text-2xl">Top Billed Cast</p>
@@ -274,7 +285,7 @@ const Details = ({ id }) => {
 
           <div
             id="castSlider"
-            className=" scrollbar-hide mb-12 overflow-x-scroll flex pl-12 scroll-smooth"
+            className=" scrollbar-hide mb-4 overflow-x-scroll flex pl-12 scroll-smooth"
           >
             {castDetails?.cast &&
               castDetails?.cast?.length > 0 &&
@@ -306,33 +317,80 @@ const Details = ({ id }) => {
         </div>
       </div>
 
-      {/* Play Trailer */}
-
-      {playTrailer && (
-        <div className="w-10/12  fixed top-0  left-[8%]  z-40  ">
-          <div className="z-50 absolute bg-black top-0 w-full h-14 flex items-center justify-between px-4">
-            <div>
-              <p className="font-bold text-md sm:text-lg md:text-xl lg:text-2xl text-white">{movieName}</p>
-            </div>
-            <div
-              className="absolut right-4 text-white hover:cursor-pointer"
-              onClick={() => {
-                setPlayTrailer(!playTrailer);
-              }}
+      <AnimatePresence>
+        {playTrailer && (
+          <motion.div
+            className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <motion.div
+              className="w-full max-w-4xl relative"
+              initial={{ scale: 0.9 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.9 }}
             >
-              <IoClose size={35} />
-            </div>
-          </div>
-          <div className="">
-            <iframe
-              className="w-[100%] h-[99vh]   "
-              src={`https://www.youtube.com/embed/${movieTeaserId}?rel=0&controls=1`}
-              title="YouTube video player"
-              allowFullScreen
-            ></iframe>
-          </div>
-        </div>
-      )}
+              <div className="absolute right-0 lg:-top-5 lg:-right-16 z-10 group">
+                <motion.button
+                  onClick={handleCloseTrailer}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  className="text-white text-6xl focus:outline-none"
+                  aria-label="Close trailer"
+                >
+                  <IoClose />
+                </motion.button>
+
+
+              </div>
+
+              <div className="aspect-video bg-black flex items-center justify-center">
+                {(isVideoLoading || !isVideoReady) && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="text-white text-center absolute"
+                  >
+                    <motion.div
+                      animate={{ rotate: 360 }}
+                      transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+                      className="text-4xl mb-2"
+                    >
+                      <FaSpinner />
+                    </motion.div>
+                    <p>Loading trailer...</p>
+                  </motion.div>
+                )}
+
+                {movieTeaserId && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: isVideoReady ? 1 : 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="w-full h-full"
+                  >
+                    <iframe
+                      className="w-full h-full"
+                      src={`https://www.youtube.com/embed/${movieTeaserId}?autoplay=1`}
+                      title="Trailer"
+                      onLoad={() => {
+                        setIsVideoLoading(false);
+                        setIsVideoReady(true);
+                      }}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  </motion.div>
+                )}
+
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 };

@@ -8,10 +8,10 @@ const userSlice = createSlice({
 	initialState,
 	reducers: {
 		addUser: (state, action) => {
-			state.currentUser= action.payload;
+			state.currentUser = action.payload;
 		},
-		removeUser: (state,action) => {
-			state.currentUser=null;
+		removeUser: (state, action) => {
+			state.currentUser = null;
 		},
 	},
 });
